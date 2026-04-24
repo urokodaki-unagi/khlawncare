@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KH</title>
+  <meta name="description" content="KH Lawn Care. Coldwater, Michigan.">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%230a0a0a%22/><text x=%2250%22 y=%2265%22 text-anchor=%22middle%22 font-family=%22Courier New, monospace%22 font-size=%2240%22 fill=%22%23f0f0f0%22>KH</text></svg>">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      height: 100%;
+      background: #0a0a0a;
+      color: #f0f0f0;
+      font-family: 'Courier New', Courier, monospace;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: 1.5rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .mark {
+      font-size: 24px;
+      letter-spacing: 0.1em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .nav-links a {
+      font-size: 24px;
+      color: #f0f0f0;
+      text-decoration: none;
+    }
+
+    .nav-links a:hover {
+      color: #aaa;
+    }
+
+    .wrap {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem 1rem;
+    }
+
+    .line {
+      font-size: 24px;
+      line-height: 1.6;
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 10px;
+      height: 24px;
+      background: #f0f0f0;
+      margin-left: 3px;
+      vertical-align: text-bottom;
+      animation: blink 1s steps(1) infinite;
+    }
+
+    .cursor.typing {
+      animation: none;
+      opacity: 1;
+    }
+
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0; }
+    }
+
+    @media (max-width: 600px) {
+      nav { padding: 1rem; }
+      .mark { font-size: 21px; }
+      .nav-links { gap: 1rem; }
+      .nav-links a { font-size: 21px; }
+      .line { font-size: 21px; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="mark">[KH]</div>
+    <div class="nav-links">
+      <a href="quote.html">[request a quote]</a>
+    </div>
+  </nav>
+
+  <div class="wrap">
+    <div class="line">
+      <span id="typed"></span><span class="cursor" id="cursor"></span>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      const slogans = [
+        'we do lawn care in coldwater, michigan.',
+        'the lawns do the advertising for us, not the website.',
+        'show up. cut grass. leave.',
+        'no hastle, no headaches, no upselling.',
+      ];
+
+      const typed = document.getElementById('typed');
+      const cursor = document.getElementById('cursor');
+
+      const TYPE_DELAY = () => 80 + Math.random() * 60;
+      const DELETE_DELAY = 60;
+      const PAUSE_MS = 9000;
+
+      let index = 0;
+
+      function typeText(text, onDone) {
+        cursor.classList.add('typing');
+        let i = 0;
+        function step() {
+          if (i < text.length) {
+            typed.textContent += text[i++];
+            setTimeout(step, TYPE_DELAY());
+          } else {
+            cursor.classList.remove('typing');
+            if (onDone) onDone();
+          }
+        }
+        step();
+      }
+
+      function deleteText(onDone) {
+        cursor.classList.add('typing');
+        function step() {
+          if (typed.textContent.length > 0) {
+            typed.textContent = typed.textContent.slice(0, -1);
+            setTimeout(step, DELETE_DELAY);
+          } else {
+            cursor.classList.remove('typing');
+            if (onDone) onDone();
+          }
+        }
+        step();
+      }
+
+      function cycle() {
+        typeText(slogans[index], () => {
+          setTimeout(() => {
+            deleteText(() => {
+              index = (index + 1) % slogans.length;
+              setTimeout(cycle, 400);
+            });
+          }, PAUSE_MS);
+        });
+      }
+
+      setTimeout(cycle, 400);
+    })();
+  </script>
+</body>
+</html>
