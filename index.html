@@ -3,174 +3,386 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>KH</title>
+  <title>KH Lawn Care</title>
   <meta name="description" content="KH Lawn Care. Coldwater, Michigan.">
   <meta name="robots" content="index, follow">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%230a0a0a%22/><text x=%2250%22 y=%2265%22 text-anchor=%22middle%22 font-family=%22Courier New, monospace%22 font-size=%2240%22 fill=%22%23f0f0f0%22>KH</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23000%22/><text x=%2250%22 y=%2268%22 text-anchor=%22middle%22 font-family=%22sans-serif%22 font-size=%2244%22 font-weight=%22bold%22 fill=%22%23fff%22>KH</text></svg>">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     html, body {
       height: 100%;
-      background: #0a0a0a;
-      color: #f0f0f0;
-      font-family: 'Courier New', Courier, monospace;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       -webkit-font-smoothing: antialiased;
     }
 
-    body {
+    /* ── LAYOUT ───────────────────────────────────────────────── */
+
+    .layout {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* ── LEFT PANEL ───────────────────────────────────────────── */
+
+    .panel-left {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 38%;
+      height: 100vh;
+      background: #000;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 3rem;
+    }
+
+    .panel-logo {
+      width: 56px;
+      height: auto;
+      opacity: 0.9;
+    }
+
+    .panel-center {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+.panel-slogan {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(28px, 3.2vw, 48px);
+      letter-spacing: 0.08em;
+      color: #fff;
+      line-height: 1.1;
+    }
+
+    .panel-bottom {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.2em;
+      color: #333;
+    }
+
+    .panel-bottom a {
+      color: #333;
+      text-decoration: none;
+      display: block;
+      margin-top: 0.3rem;
+      transition: color 0.15s;
+    }
+
+    .panel-bottom a:hover { color: #888; }
+
+    /* ── RIGHT PANEL ──────────────────────────────────────────── */
+
+    .panel-right {
+      margin-left: 38%;
+      width: 62%;
+      min-height: 100vh;
+      background: #fff;
+      color: #000;
       display: flex;
       flex-direction: column;
     }
 
-    nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      padding: 1.5rem 2rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .mark {
-      font-size: 24px;
-      letter-spacing: 0.1em;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 2rem;
-    }
-
-    .nav-links a {
-      font-size: 24px;
-      color: #f0f0f0;
-      text-decoration: none;
-    }
-
-    .nav-links a:hover {
-      color: #aaa;
-    }
-
-    .wrap {
+    .form-wrap {
       flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 2rem 1rem;
+      padding: 5rem 5rem 5rem 6rem;
+      max-width: 600px;
     }
 
-    .line {
-      font-size: 24px;
+    .form-heading {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(36px, 4.5vw, 62px);
+      letter-spacing: 0.04em;
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .form-sub {
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #aaa;
+      margin-bottom: 3.5rem;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+    }
+
+    .field { margin-bottom: 2.5rem; }
+
+    label {
+      display: block;
+      font-size: 10px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: #aaa;
+      margin-bottom: 0.6rem;
+    }
+
+    input, textarea {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid #e0e0e0;
+      color: #000;
+      font-family: inherit;
+      font-size: 15px;
+      padding: 0.4rem 0 0.65rem;
+      outline: none;
+      border-radius: 0;
+      -webkit-appearance: none;
+      transition: border-color 0.15s;
+    }
+
+    input::placeholder, textarea::placeholder { color: #ddd; }
+
+    input:focus, textarea:focus {
+      border-bottom-color: #000;
+      border-bottom-width: 1.5px;
+    }
+
+    input.invalid, textarea.invalid {
+      border-bottom-color: #000;
+    }
+
+    textarea {
+      resize: none;
+      min-height: 100px;
       line-height: 1.6;
     }
 
-    .cursor {
-      display: inline-block;
-      width: 10px;
-      height: 24px;
-      background: #f0f0f0;
-      margin-left: 3px;
-      vertical-align: text-bottom;
-      animation: blink 1s steps(1) infinite;
+    .submit-wrap {
+      padding-top: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      flex-wrap: wrap;
     }
 
-    .cursor.typing {
-      animation: none;
-      opacity: 1;
+    button[type="submit"] {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 16px;
+      letter-spacing: 0.25em;
+      background: #000;
+      color: #fff;
+      border: none;
+      padding: 1rem 3rem;
+      cursor: pointer;
+      transition: background 0.15s;
     }
 
-    @keyframes blink {
-      0%, 50% { opacity: 1; }
-      51%, 100% { opacity: 0; }
+    button[type="submit"]:hover { background: #222; }
+
+    .success-msg {
+      display: none;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 13px;
+      letter-spacing: 0.2em;
+      color: #888;
     }
 
-    @media (max-width: 600px) {
-      nav { padding: 1rem; }
-      .mark { font-size: 21px; }
-      .nav-links { gap: 1rem; }
-      .nav-links a { font-size: 21px; }
-      .line { font-size: 21px; }
+    .error-msg {
+      display: none;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #999;
+      width: 100%;
+      padding-top: 0.5rem;
+    }
+
+    /* ── RIGHT FOOTER ─────────────────────────────────────────── */
+
+    .right-footer {
+      padding: 2rem 5rem 2rem 6rem;
+      border-top: 1px solid #f0f0f0;
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #ccc;
+    }
+
+    /* ── MOBILE ───────────────────────────────────────────────── */
+
+    @media (max-width: 860px) {
+      .layout { flex-direction: column; }
+
+      .panel-left {
+        position: relative;
+        width: 100%;
+        height: auto;
+        padding: 2.5rem 2rem 2.5rem;
+        flex-direction: row;
+        align-items: center;
+        gap: 1.5rem;
+      }
+
+      .panel-center { flex: 1; justify-content: flex-start; }
+      .panel-slogan { font-size: 20px; }
+      .panel-bottom { display: none; }
+      .panel-logo { width: 44px; }
+
+      .panel-right {
+        margin-left: 0;
+        width: 100%;
+      }
+
+      .form-wrap {
+        padding: 3.5rem 2rem 3.5rem;
+        max-width: 100%;
+      }
+
+      .form-row { grid-template-columns: 1fr; gap: 0; }
+
+      .right-footer { padding: 1.5rem 2rem; }
     }
   </style>
 </head>
 <body>
-  <nav>
-    <div class="mark">[KH]</div>
-    <div class="nav-links">
-      <a href="contact.html">[request a quote]</a>
+
+<div class="layout">
+
+  <!-- LEFT: BRAND PANEL -->
+  <aside class="panel-left">
+    <img src="khlc.png" alt="KH Lawn Care logo" class="panel-logo">
+
+    <div class="panel-center">
+      <div class="panel-slogan">
+        THE LAWNS<br>ADVERTISE<br>FOR US.<br>NOT THE<br>WEBSITE.
+      </div>
     </div>
-  </nav>
 
-  <div class="wrap">
-    <div class="line">
-      <span id="typed"></span><span class="cursor" id="cursor"></span>
+    <div class="panel-bottom">
+      COLDWATER, MICHIGAN
+      <a href="mailto:quote@khlawncare.com">QUOTE@KHLAWNCARE.COM</a>
     </div>
-  </div>
+  </aside>
 
-  <script>
-    (function() {
-      const slogans = [
-        'we do lawn care in coldwater, michigan.',
-        'the lawns do the advertising for us, not the website.',
-        'show up. cut grass. leave.',
-        'no hastle, no headaches, no upselling.',
-      ];
+  <!-- RIGHT: FORM PANEL -->
+  <main class="panel-right">
+    <div class="form-wrap">
+      <div class="form-heading">REQUEST<br>A QUOTE</div>
+      <div class="form-sub">All fields required</div>
 
-      const typed = document.getElementById('typed');
-      const cursor = document.getElementById('cursor');
+      <form id="quoteForm" novalidate>
+        <div class="form-row">
+          <div class="field">
+            <label for="firstName">First Name</label>
+            <input type="text" id="firstName" name="firstName"
+                   autocomplete="given-name" required placeholder="John">
+          </div>
+          <div class="field">
+            <label for="lastName">Last Name</label>
+            <input type="text" id="lastName" name="lastName"
+                   autocomplete="family-name" required placeholder="Smith">
+          </div>
+        </div>
 
-      const TYPE_DELAY = () => 80 + Math.random() * 60;
-      const DELETE_DELAY = 60;
-      const PAUSE_MS = 9000;
+        <div class="field">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email"
+                 autocomplete="email" required placeholder="john@example.com">
+        </div>
 
-      let index = 0;
+        <div class="field">
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" name="phone"
+                 autocomplete="tel" required placeholder="(269) 555-0100" maxlength="14">
+        </div>
 
-      function typeText(text, onDone) {
-        cursor.classList.add('typing');
-        let i = 0;
-        function step() {
-          if (i < text.length) {
-            typed.textContent += text[i++];
-            setTimeout(step, TYPE_DELAY());
-          } else {
-            cursor.classList.remove('typing');
-            if (onDone) onDone();
-          }
-        }
-        step();
-      }
+        <div class="field">
+          <label for="description">Tell Us About Your Property</label>
+          <textarea id="description" name="description" required
+                    placeholder="Address, lot size, services needed, any notes..."></textarea>
+        </div>
 
-      function deleteText(onDone) {
-        cursor.classList.add('typing');
-        function step() {
-          if (typed.textContent.length > 0) {
-            typed.textContent = typed.textContent.slice(0, -1);
-            setTimeout(step, DELETE_DELAY);
-          } else {
-            cursor.classList.remove('typing');
-            if (onDone) onDone();
-          }
-        }
-        step();
-      }
+        <div class="submit-wrap">
+          <button type="submit">SEND REQUEST</button>
+          <div class="success-msg" id="successMsg">REQUEST RECEIVED — WE'LL BE IN TOUCH.</div>
+          <div class="error-msg" id="errorMsg">Please fill out all fields.</div>
+        </div>
+      </form>
+    </div>
 
-      function cycle() {
-        typeText(slogans[index], () => {
-          setTimeout(() => {
-            deleteText(() => {
-              index = (index + 1) % slogans.length;
-              setTimeout(cycle, 400);
-            });
-          }, PAUSE_MS);
-        });
-      }
+    <div class="right-footer">KH Lawn Care &mdash; Coldwater, MI</div>
+  </main>
 
-      setTimeout(cycle, 400);
-    })();
-  </script>
+</div>
+
+<script>
+  /* Phone auto-format → (XXX) XXX-XXXX */
+  document.getElementById('phone').addEventListener('input', function (e) {
+    let v = e.target.value.replace(/\D/g, '').slice(0, 10);
+    if (v.length >= 7)      v = '(' + v.slice(0,3) + ') ' + v.slice(3,6) + '-' + v.slice(6);
+    else if (v.length >= 4) v = '(' + v.slice(0,3) + ') ' + v.slice(3);
+    else if (v.length > 0)  v = '(' + v;
+    e.target.value = v;
+  });
+
+  /* Form submit — Firebase will be wired here */
+  document.getElementById('quoteForm').addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+    const form   = e.target;
+    const fields = [...form.querySelectorAll('[required]')];
+    const errEl  = document.getElementById('errorMsg');
+    const okEl   = document.getElementById('successMsg');
+
+    let valid = true;
+    fields.forEach(f => {
+      f.classList.remove('invalid');
+      const empty    = !f.value.trim();
+      const badEmail = f.type === 'email' && f.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.value);
+      const badPhone = f.id === 'phone' && f.value && f.value.replace(/\D/g,'').length < 10;
+      if (empty || badEmail || badPhone) { f.classList.add('invalid'); valid = false; }
+    });
+
+    if (!valid) {
+      errEl.style.display = 'block';
+      okEl.style.display  = 'none';
+      return;
+    }
+
+    errEl.style.display = 'none';
+
+    const data = {
+      firstName:   form.firstName.value.trim(),
+      lastName:    form.lastName.value.trim(),
+      email:       form.email.value.trim(),
+      phone:       form.phone.value.trim(),
+      description: form.description.value.trim(),
+      submittedAt: new Date().toISOString(),
+    };
+
+    /*
+     * ── Firebase integration (wire up when ready) ─────────────
+     *
+     * import { initializeApp }                    from 'firebase/app';
+     * import { getFirestore, collection, addDoc } from 'firebase/firestore';
+     *
+     * const app = initializeApp({ ...firebaseConfig });
+     * const db  = getFirestore(app);
+     * await addDoc(collection(db, 'quotes'), data);
+     * ──────────────────────────────────────────────────────────
+     */
+
+    console.log('Quote request:', data);
+    okEl.style.display = 'block';
+    form.reset();
+  });
+</script>
+
 </body>
 </html>
