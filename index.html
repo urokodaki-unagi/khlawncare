@@ -321,7 +321,10 @@
 
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script>
+  emailjs.init('D58rJ5QybCMtPRMZs');
+
   /* Phone auto-format → (XXX) XXX-XXXX */
   document.getElementById('phone').addEventListener('input', function (e) {
     let v = e.target.value.replace(/\D/g, '').slice(0, 10);
@@ -331,7 +334,6 @@
     e.target.value = v;
   });
 
-  /* Form submit — Firebase will be wired here */
   document.getElementById('quoteForm').addEventListener('submit', async function (e) {
     e.preventDefault();
 
@@ -339,6 +341,7 @@
     const fields = [...form.querySelectorAll('[required]')];
     const errEl  = document.getElementById('errorMsg');
     const okEl   = document.getElementById('successMsg');
+    const btn    = form.querySelector('button[type="submit"]');
 
     let valid = true;
     fields.forEach(f => {
@@ -350,37 +353,35 @@
     });
 
     if (!valid) {
+      errEl.textContent   = 'Please fill out all fields.';
       errEl.style.display = 'block';
       okEl.style.display  = 'none';
       return;
     }
 
     errEl.style.display = 'none';
+    btn.textContent     = 'SENDING...';
+    btn.disabled        = true;
 
-    const data = {
-      firstName:   form.firstName.value.trim(),
-      lastName:    form.lastName.value.trim(),
-      email:       form.email.value.trim(),
-      phone:       form.phone.value.trim(),
-      description: form.description.value.trim(),
-      submittedAt: new Date().toISOString(),
-    };
+    try {
+      await emailjs.send('service_fwqg2ul', 'template_jcnrlxf', {
+        firstName:   form.firstName.value.trim(),
+        lastName:    form.lastName.value.trim(),
+        email:       form.email.value.trim(),
+        phone:       form.phone.value.trim(),
+        description: form.description.value.trim(),
+        submittedAt: new Date().toLocaleString(),
+      });
 
-    /*
-     * ── Firebase integration (wire up when ready) ─────────────
-     *
-     * import { initializeApp }                    from 'firebase/app';
-     * import { getFirestore, collection, addDoc } from 'firebase/firestore';
-     *
-     * const app = initializeApp({ ...firebaseConfig });
-     * const db  = getFirestore(app);
-     * await addDoc(collection(db, 'quotes'), data);
-     * ──────────────────────────────────────────────────────────
-     */
-
-    console.log('Quote request:', data);
-    okEl.style.display = 'block';
-    form.reset();
+      okEl.style.display = 'block';
+      form.reset();
+    } catch (err) {
+      errEl.textContent   = 'Something went wrong. Please try again.';
+      errEl.style.display = 'block';
+    } finally {
+      btn.textContent = 'SEND REQUEST';
+      btn.disabled    = false;
+    }
   });
 </script>
 
